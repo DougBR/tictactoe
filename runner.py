@@ -109,11 +109,8 @@ while True:
         if user != player and not game_over:
             if ai_turn:
                 time.sleep(0.5)
-                start_time = time.time()
                 move = ttt.minimax(board)
                 board = ttt.result(board, move)
-                print(time.time() - start_time)
-                start_time = time.time()
                 ai_turn = False
             else:
                 ai_turn = True
