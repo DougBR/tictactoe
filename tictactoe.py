@@ -127,6 +127,7 @@ def min_value(board):
     v = math.inf
     if terminal(board):
         return utility(board), None
+    best_move = None
     for action in actions(board):
         value, _ = max_value(result(board, action))
         if value < v:
