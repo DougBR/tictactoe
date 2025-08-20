@@ -103,34 +103,40 @@ def minimax(board):
         None
     simulation_board = deepcopy(board)
     if player(simulation_board) == X:
-        _, move = max_value(board)
+        _, move = max_value(-math.inf, math.inf, board)
         return move
     else:
-        _, move = min_value(board)
+        _, move = min_value(-math.inf, math.inf, board)
         return move
 
 
-def max_value(board):
+def max_value(alpha, beta, board):
     v = -math.inf
     if terminal(board):
         return utility(board), None
     best_move = None
     for action in actions(board):
-        value, _ = min_value(result(board, action))
+        value, _ = min_value(alpha, beta, result(board, action))
         if value > v:
             v = value
             best_move = action
+        alpha = max(v, alpha)
+        if value >= beta:
+            break
     return v, best_move
 
 
-def min_value(board):
+def min_value(alpha, beta, board):
     v = math.inf
     if terminal(board):
         return utility(board), None
     best_move = None
     for action in actions(board):
-        value, _ = max_value(result(board, action))
+        value, _ = max_value(alpha, beta, result(board, action))
         if value < v:
             v = value
             best_move = action
+        beta = min(v, beta)
+        if value <= alpha:
+            break
     return v, best_move
